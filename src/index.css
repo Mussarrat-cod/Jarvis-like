@@ -1,0 +1,245 @@
+@import './styles/holographic.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-white overflow-x-hidden;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #00E5FF #0A0F1C;
+  }
+  
+  *::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: #0A0F1C;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background: #00E5FF;
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  .jarvis-button {
+    @apply bg-gradient-to-r from-cyan-400 to-purple-500 hover:from-cyan-300 hover:to-purple-400 text-white font-semibold py-3 px-6 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-cyan-500/25 hover:scale-105;
+  }
+  
+  .jarvis-input {
+    @apply bg-slate-800/50 border border-cyan-500/30 rounded-2xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 backdrop-blur-sm transition-all duration-300;
+  }
+  
+  .jarvis-card {
+    background: rgba(10, 15, 28, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .jarvis-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.1), transparent);
+    transition: left 0.5s;
+  }
+
+  .jarvis-card:hover::before {
+    left: 100%;
+  }
+
+  .jarvis-card:hover {
+    border-color: rgba(0, 229, 255, 0.4);
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+    transform: translateY(-2px);
+  }
+  
+  .holo-button {
+    @apply relative overflow-hidden bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-cyan-500/30;
+  }
+  
+  .holo-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+  }
+  
+  .holo-button:hover::before {
+    left: 100%;
+  }
+  
+  .holo-title {
+    background: linear-gradient(45deg, #00E5FF, #7C4DFF, #00E5FF);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: holo-shift 3s ease-in-out infinite;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (min-width: 768px) {
+    .holo-title {
+      font-size: 4.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .holo-title {
+      font-size: 5rem;
+    }
+  }
+  
+  .holo-subtitle {
+    color: #cbd5e1;
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (min-width: 768px) {
+    .holo-subtitle {
+      font-size: 1.5rem;
+    }
+  }
+  
+  .holo-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+  
+  .holo-feature-card {
+    background: rgba(10, 15, 28, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+    position: relative;
+    overflow: hidden;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .holo-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.1), transparent);
+    transition: left 0.5s;
+  }
+
+  .holo-feature-card:hover::before {
+    left: 100%;
+  }
+
+  .holo-feature-card:hover {
+    border-color: rgba(0, 229, 255, 0.4);
+    box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+    transform: scale(1.05);
+  }
+  
+  .holo-input {
+    @apply bg-slate-900/50 border border-cyan-500/30 rounded-2xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 backdrop-blur-sm transition-all duration-300;
+  }
+  
+  .holo-mic-button {
+    background: linear-gradient(135deg, #00E5FF, #7C4DFF);
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+    animation: mic-pulse 2s ease-in-out infinite;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .holo-mic-button.listening {
+    animation: mic-listening 1s ease-in-out infinite;
+    background: linear-gradient(135deg, #FF6B6B, #00E5FF);
+  }
+  
+  .holo-status {
+    background: rgba(6, 182, 212, 0.3);
+    border: 1px solid rgba(0, 229, 255, 0.3);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .holo-response {
+    background: rgba(15, 23, 42, 0.5);
+    border-radius: 1rem;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+  }
+  
+  .holo-chat-message {
+    padding: 0.75rem;
+    border-radius: 1rem;
+    backdrop-filter: blur(4px);
+  }
+  
+  .holo-chat-user {
+    background: rgba(6, 182, 212, 0.2);
+    border-left: 4px solid #00E5FF;
+  }
+  
+  .holo-chat-jarvis {
+    background: rgba(51, 65, 85, 0.3);
+    border-left: 4px solid #64748b;
+  }
+}
+
+@layer utilities {
+  .text-holo {
+    background: linear-gradient(45deg, #00E5FF, #7C4DFF, #00E5FF);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: holo-shift 3s ease-in-out infinite;
+  }
+  
+  .bg-holo {
+    background: linear-gradient(to bottom right, #0a0f1c, #1e3a5f, #0a0f1c);
+  }
+  
+  .border-holo {
+    border: 1px solid rgba(0, 229, 255, 0.2);
+  }
+  
+  .glow-holo {
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.25);
+  }
+}

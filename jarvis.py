@@ -109,16 +109,15 @@ if __name__ == "__main__":
             codePath = "C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
             os.startfile(codePath)
 
-        elif 'email to Mussarrat
-        ' in query:
+        elif 'email' in query:
             try:
                 speak("What should I say?")
                 content = takeCommand()
-                to = "recipient_email@example.com" # Change this to the recipient's email
+                to = "mussarratkittur@gmail.com"  # Change this to the recipient's email
                 sendEmail(to, content)
                 speak("Email has been sent!")
             except Exception as e:
                 print(e)
-                speak("Sorry my friend harry bhai. I am not able to send this email")    
+                speak("Sorry, I am not able to send this email")    
         else:
             print("No query matched")
