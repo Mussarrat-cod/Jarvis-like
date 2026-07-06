@@ -1,257 +1,272 @@
-/* Holographic UI Theme for Jarvis */
+/* Instrument Panel Theme for Jarvis
+   Direction: precision hardware / analog instrument, not sci-fi hologram.
+   One signature motion (the dial ring), everything else stays quiet. */
 
 :root {
-  --bg-primary: #0A0F1C;
-  --bg-secondary: #151923;
-  --primary: #00E5FF;
-  --accent: #7C4DFF;
-  --highlight: #FF6B6B;
-  --text-primary: #FFFFFF;
-  --text-secondary: #B8C5D6;
-  --glass-bg: rgba(10, 15, 28, 0.4);
-  --glass-border: rgba(0, 229, 255, 0.2);
-  --glow-primary: 0 0 20px rgba(0, 229, 255, 0.5);
-  --glow-accent: 0 0 20px rgba(124, 77, 255, 0.5);
+  --bg-primary: #0E0D0C;
+  --bg-secondary: #18160F;
+  --panel: #1D1B15;
+  --ink: #F2EEE3;
+  --muted: #A69C87;
+  --accent: #C77D3E;       /* burnt copper */
+  --accent-dim: #8A5A32;
+  --danger: #B5502F;
+
+  --line: rgba(242, 238, 227, 0.08);
+  --line-strong: rgba(242, 238, 227, 0.16);
+  --accent-line: rgba(199, 125, 62, 0.35);
+
+  --shadow-panel: 0 1px 0 rgba(242, 238, 227, 0.04) inset,
+                  0 12px 24px rgba(0, 0, 0, 0.35);
+
+  --font-display: 'Söhne', 'Inter', -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'JetBrains Mono', monospace;
 }
 
 body {
   background: var(--bg-primary);
+  color: var(--ink);
+  font-family: var(--font-display);
   overflow-x: hidden;
 }
 
-/* Holographic Grid Background */
+/* Background: a faint etched grid, static — no scrolling/moving grid.
+   Motion should be reserved for the one signature element. */
 .holographic-bg {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: 
-    linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
-  background-size: 50px 50px;
-  background-position: 0 0, 0 0;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(242, 238, 227, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242, 238, 227, 0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
   pointer-events: none;
   z-index: 0;
-  animation: grid-move 20s linear infinite;
+  mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, transparent 100%);
 }
 
-@keyframes grid-move {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(50px, 50px); }
-}
-
-/* Glassmorphism Cards */
+/* Panels: flat, hairline-bordered, no border-gradient glow */
 .glass-card {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  box-shadow: var(--glow-primary);
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: var(--shadow-panel);
   position: relative;
-  overflow: hidden;
-}
-
-.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.1), transparent);
-  transition: left 0.5s;
-}
-
-.glass-card:hover::before {
-  left: 100%;
 }
 
 .glass-card:hover {
-  border-color: rgba(0, 229, 255, 0.4);
-  box-shadow: 0 0 30px rgba(0, 229, 255, 0.6);
+  border-color: var(--line-strong);
 }
 
-/* Glowing Borders */
+/* Reserve the accent border for things that are actually active/selected,
+   not as a decorative hover default */
 .glow-border {
-  border: 2px solid transparent;
-  background: linear-gradient(var(--bg-primary), var(--bg-primary)) padding-box,
-              linear-gradient(45deg, var(--primary), var(--accent)) border-box;
-  border-radius: 20px;
+  border: 1px solid var(--accent-line);
+  border-radius: 6px;
+  background: var(--panel);
 }
 
-/* Circular UI Elements */
+/* Signature element: a rotating index ring around a still core.
+   Reads as an instrument taking a reading, not a pulsing blob. */
 .ai-core {
-  width: 120px;
-  height: 120px;
+  width: 96px;
+  height: 96px;
   border-radius: 50%;
-  background: radial-gradient(circle, var(--primary), var(--accent));
-  box-shadow: var(--glow-primary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--line-strong);
   position: relative;
-  animation: core-pulse 3s ease-in-out infinite;
-}
-
-@keyframes core-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.1); opacity: 1; }
 }
 
 .ai-core::before {
   content: '';
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  inset: -8px;
   border-radius: 50%;
-  background: radial-gradient(circle, transparent, rgba(0, 229, 255, 0.3));
-  animation: core-ring 2s linear infinite;
+  border: 1px solid transparent;
+  border-top-color: var(--accent);
+  border-right-color: var(--accent-dim);
+  animation: dial-rotate 4s linear infinite;
 }
 
-@keyframes core-ring {
-  0% { transform: rotate(0deg); opacity: 1; }
-  100% { transform: rotate(360deg); opacity: 0; }
+.ai-core::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
 }
 
-/* Pulsing Mic Button */
+@keyframes dial-rotate {
+  to { transform: rotate(360deg); }
+}
+
+/* Mic button: a solid state change, not a scaling/glowing loop */
 .mic-pulse {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  box-shadow: var(--glow-primary);
-  animation: mic-pulse 2s ease-in-out infinite;
-}
-
-@keyframes mic-pulse {
-  0%, 100% { 
-    transform: scale(1);
-    box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
-  }
-  50% { 
-    transform: scale(1.05);
-    box-shadow: 0 0 40px rgba(0, 229, 255, 0.8);
-  }
+  background: var(--panel);
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
 .mic-pulse.listening {
-  animation: mic-listening 1s ease-in-out infinite;
-  background: linear-gradient(135deg, var(--highlight), var(--primary));
+  background: var(--bg-secondary);
+  border-color: var(--accent);
 }
 
-@keyframes mic-listening {
-  0%, 100% { 
-    transform: scale(1);
-    box-shadow: 0 0 30px rgba(255, 107, 107, 0.8);
-  }
-  50% { 
-    transform: scale(1.1);
-    box-shadow: 0 0 50px rgba(255, 107, 107, 1);
-  }
+.mic-pulse.listening::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 1px solid var(--accent-line);
 }
 
-/* Typing Animation */
+/* Status text: a steady label with a small live-dot, not a typewriter effect */
 .typing-text {
-  overflow: hidden;
-  border-right: 2px solid var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--muted);
   white-space: nowrap;
-  animation: typing 3s steps(40, end), blink 0.75s step-end infinite;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+.typing-text::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
 }
 
-@keyframes blink {
-  from, to { border-color: transparent; }
-  50% { border-color: var(--primary); }
-}
-
-/* Glow on Hover */
+/* Hover: a lift with a hairline shadow, not a colored glow */
 .hover-glow {
-  transition: all 0.3s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
 .hover-glow:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(0, 229, 255, 0.4);
+  transform: translateY(-1px);
+  border-color: var(--line-strong);
 }
 
-/* Animated Waveform */
+/* Waveform: same bars, but a measured cadence instead of a synced bounce,
+   and drawn in muted ink with a single accent bar as the "peak" */
 .waveform {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   gap: 3px;
-  height: 40px;
+  height: 32px;
 }
 
 .waveform-bar {
   width: 3px;
-  background: linear-gradient(to top, var(--primary), var(--accent));
-  border-radius: 3px;
-  animation: wave 1s ease-in-out infinite;
+  background: var(--muted);
+  border-radius: 1px;
+  animation: wave 1.6s ease-in-out infinite;
 }
 
-.waveform-bar:nth-child(1) { animation-delay: 0s; height: 20%; }
-.waveform-bar:nth-child(2) { animation-delay: 0.1s; height: 40%; }
-.waveform-bar:nth-child(3) { animation-delay: 0.2s; height: 60%; }
-.waveform-bar:nth-child(4) { animation-delay: 0.3s; height: 80%; }
-.waveform-bar:nth-child(5) { animation-delay: 0.4s; height: 60%; }
-.waveform-bar:nth-child(6) { animation-delay: 0.5s; height: 40%; }
-.waveform-bar:nth-child(7) { animation-delay: 0.6s; height: 20%; }
+.waveform-bar:nth-child(4) {
+  background: var(--accent);
+}
+
+.waveform-bar:nth-child(1) { animation-delay: 0s;    height: 30%; }
+.waveform-bar:nth-child(2) { animation-delay: 0.15s; height: 45%; }
+.waveform-bar:nth-child(3) { animation-delay: 0.3s;  height: 60%; }
+.waveform-bar:nth-child(4) { animation-delay: 0.45s; height: 80%; }
+.waveform-bar:nth-child(5) { animation-delay: 0.6s;  height: 60%; }
+.waveform-bar:nth-child(6) { animation-delay: 0.75s; height: 45%; }
+.waveform-bar:nth-child(7) { animation-delay: 0.9s;  height: 30%; }
 
 @keyframes wave {
-  0%, 100% { transform: scaleY(1); }
-  50% { transform: scaleY(1.5); }
+  0%, 100% { transform: scaleY(1); opacity: 0.7; }
+  50% { transform: scaleY(1.3); opacity: 1; }
 }
 
-/* Holographic Text */
+/* Text: plain, high-contrast ink — no gradient-clip "holographic" text */
 .holo-text {
-  background: linear-gradient(45deg, var(--primary), var(--accent), var(--primary));
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: holo-shift 3s ease-in-out infinite;
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
-@keyframes holo-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-/* Circular Progress */
+/* Progress ring: same mechanic, in accent-on-muted, no infinite loop —
+   it should reflect real progress, not decorate */
 .progress-ring {
   transform: rotate(-90deg);
 }
 
 .progress-ring-circle {
-  stroke: var(--primary);
+  stroke: var(--accent);
   stroke-width: 2;
   fill: transparent;
-  stroke-dasharray: 126;
-  stroke-dashoffset: 126;
-  animation: progress 2s ease-in-out infinite;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease;
 }
 
-@keyframes progress {
-  0% { stroke-dashoffset: 126; }
-  50% { stroke-dashoffset: 0; }
-  100% { stroke-dashoffset: 126; }
-}
-
-/* Alert Colors */
+/* Alerts: flat, not gradient-glow */
 .alert-primary {
-  background: linear-gradient(135deg, var(--highlight), var(--accent));
-  box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+  background: var(--panel);
+  border: 1px solid var(--danger);
+  color: var(--ink);
 }
 
-/* Responsive Design */
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  padding: 12px 24px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border: 1px solid var(--accent);
+}
+
+.btn-primary:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent-dim);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-secondary);
+  border-color: var(--muted);
+}
+
 @media (max-width: 768px) {
   .ai-core {
-    width: 80px;
-    height: 80px;
+    width: 72px;
+    height: 72px;
   }
-  
+
   .glass-card {
-    border-radius: 15px;
+    border-radius: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-core::before,
+  .waveform-bar {
+    animation: none;
   }
 }

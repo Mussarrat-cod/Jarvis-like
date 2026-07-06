@@ -230,87 +230,82 @@ const LandingPage = ({ onStartUsing }) => {
       </header>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 px-4 relative z-10">
-        <div className="container mx-auto text-center">
+      <section className="pt-24 pb-12 px-4 relative z-10">
+        <div className="container mx-auto max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
+            className="glass-card p-12 flex flex-col items-center text-center"
           >
-            <h1 className="holo-title">
+            <motion.div className="inline-flex items-center justify-center ai-core mb-6">
+              <Mic className="w-8 h-8 text-ink" />
+            </motion.div>
+
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 text-ink">
               Jarvis – Your Personal AI Assistant
             </h1>
-            <p className="holo-subtitle max-w-3xl mx-auto">
+            <p className="text-muted text-lg max-w-2xl mx-auto mb-10">
               Control your system with voice. Fast, simple, powerful.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleStartUsing}
-                className="holo-button"
-              >
-                <Zap className="inline w-5 h-5 mr-2" />
+            <div className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
+              <button onClick={handleStartUsing} className="btn btn-primary">
+                <Zap className="w-4 h-4" />
                 Start Using
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={scrollToCommands}
-                className="px-8 py-4 bg-slate-800/50 border border-cyan-500/30 rounded-full font-semibold text-lg hover:bg-slate-700/50 transition-all duration-300 hover:scale-105"
-              >
-                <Command className="inline w-5 h-5 mr-2" />
+              </button>
+              <button onClick={scrollToCommands} className="btn btn-secondary">
+                <Command className="w-4 h-4" />
                 View Commands
-              </motion.button>
+              </button>
             </div>
-
-            {/* Animated AI Core */}
-            <motion.div
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="inline-flex items-center justify-center ai-core cursor-pointer"
-            >
-              <Mic className="w-12 h-12 text-white" />
-            </motion.div>
           </motion.div>
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-16 px-4 bg-slate-900/50 relative z-10">
-        <div className="container mx-auto">
+      <section className="py-12 px-4 relative z-10">
+        <div className="container mx-auto max-w-5xl">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.6 }}
+            className="glass-card p-12"
           >
-            <h2 className="text-4xl font-bold mb-4 text-holo">How It Works</h2>
-            <p className="text-slate-400 text-lg">Simple steps to get started</p>
-          </motion.div>
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold mb-2 text-ink">How It Works</h2>
+              <p className="text-muted">Simple steps to get started</p>
+            </div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {[
-              { icon: Mic, title: "Click or Speak", desc: "Click the microphone or type a command" },
-              { icon: Terminal, title: "Give Command", desc: "Say or enter a command like 'open youtube'" },
-              { icon: Zap, title: "Instant Action", desc: "Jarvis performs the action instantly" }
-            ].map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-                className="holo-feature-card"
-              >
-                <div className="w-16 h-16 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4 ai-core">
-                  <step.icon className="w-8 h-8 text-white" />
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Step 1: Idle (Quiet styling) */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full border border-line bg-panel flex items-center justify-center mb-6">
+                  <Mic className="w-6 h-6 text-muted" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-holo">{step.title}</h3>
-                <p className="text-slate-400">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+                <h3 className="text-lg font-semibold mb-2 text-ink">1. Click or Speak</h3>
+                <p className="text-muted text-sm leading-relaxed">Activate the microphone or type a command</p>
+              </div>
+
+              {/* Step 2: Listening/Processing (Rotating AI Core) */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 ai-core flex items-center justify-center mb-6">
+                  <Terminal className="w-6 h-6 text-accent" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-ink">2. Give Command</h3>
+                <p className="text-muted text-sm leading-relaxed">Say or enter a command like 'open youtube'</p>
+              </div>
+
+              {/* Step 3: Action (Accent Border) */}
+              <div className="flex flex-col items-center text-center">
+                <div className="w-16 h-16 rounded-full border border-accent bg-bg-secondary flex items-center justify-center mb-6">
+                  <Zap className="w-6 h-6 text-ink" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-ink">3. Instant Action</h3>
+                <p className="text-muted text-sm leading-relaxed">Jarvis performs the action instantly</p>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -396,48 +391,39 @@ const LandingPage = ({ onStartUsing }) => {
       </section>
 
       {/* Interactive Demo */}
-      <section id="demo" className="py-16 px-4 bg-slate-900/50 relative z-10">
+      <section id="demo" className="py-12 px-4 relative z-10">
         <div className="container mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
+            transition={{ duration: 0.6 }}
+            className="glass-card p-12"
           >
-            <h2 className="text-4xl font-bold mb-4 text-holo">Try It Now</h2>
-            <p className="text-slate-400 text-lg">Experience Jarvis in action</p>
-          </motion.div>
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold mb-2 text-ink">Try It Now</h2>
+              <p className="text-muted">Experience Jarvis in action</p>
+            </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="holo-response"
-          >
-            <div className="flex gap-4 mb-6">
+            <div className="flex gap-4 mb-8">
               <input
                 type="text"
                 placeholder="Type a command or use voice..."
                 value={demoCommand}
                 onChange={(e) => setDemoCommand(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleDemoCommand()}
-                className="flex-1 holo-input"
+                className="flex-1 bg-bg-secondary border border-line rounded-md text-ink px-4 focus:outline-none focus:border-accent-line transition-colors"
               />
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <button
                 onClick={isDemoListening ? stopDemoListening : startDemoListening}
-                className={`holo-mic-button ${isDemoListening ? 'listening' : ''}`}
+                className={`w-12 h-12 rounded-md flex items-center justify-center border transition-colors ${
+                  isDemoListening ? 'bg-bg-secondary border-accent' : 'bg-panel border-line hover:border-line-strong'
+                }`}
               >
-                {isDemoListening ? (
-                  <MicOff className="w-6 h-6" />
-                ) : (
-                  <Mic className="w-6 h-6" />
-                )}
-              </motion.button>
+                {isDemoListening ? <MicOff className="w-5 h-5 text-accent" /> : <Mic className="w-5 h-5 text-ink" />}
+              </button>
               <button
                 onClick={handleDemoCommand}
-                className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-2xl font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105"
+                className="btn btn-primary px-6"
               >
                 <Send className="w-5 h-5" />
               </button>
@@ -455,11 +441,11 @@ const LandingPage = ({ onStartUsing }) => {
                     <div key={i} className="waveform-bar" />
                   ))}
                 </div>
-                <span className="text-sm text-cyan-300 ml-3">Listening... Speak clearly into your microphone</span>
+                <span className="text-sm text-accent ml-3">Listening... Speak clearly into your microphone</span>
               </motion.div>
             )}
 
-            <div className="h-64 bg-slate-900/50 rounded-2xl p-4 overflow-y-auto border border-cyan-500/20">
+            <div className="h-64 bg-bg-secondary rounded-md p-4 overflow-y-auto border border-line">
               <AnimatePresence>
                 {demoResponse && (
                   <motion.div
@@ -469,12 +455,12 @@ const LandingPage = ({ onStartUsing }) => {
                     className="mb-4"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0 ai-core">
-                        <Volume2 className="w-4 h-4 text-white" />
+                      <div className="w-8 h-8 bg-panel border border-line rounded-full flex items-center justify-center flex-shrink-0">
+                        <Volume2 className="w-4 h-4 text-ink" />
                       </div>
                       <div className="flex-1">
-                        <p className="text-sm font-semibold mb-1 text-cyan-400">Jarvis</p>
-                        <p className="text-slate-300 typing-text" dangerouslySetInnerHTML={{ __html: demoResponse }}></p>
+                        <p className="text-sm font-semibold mb-1 text-ink">Jarvis</p>
+                        <p className="text-muted typing-text" dangerouslySetInnerHTML={{ __html: demoResponse }}></p>
                       </div>
                     </div>
                   </motion.div>
@@ -486,10 +472,10 @@ const LandingPage = ({ onStartUsing }) => {
                     animate={{ opacity: 1 }}
                     className="flex items-center gap-2"
                   >
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" />
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce delay-75" />
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce delay-150" />
-                    <span className="text-slate-400 ml-2">Processing...</span>
+                    <div className="w-2 h-2 bg-muted rounded-full animate-bounce" />
+                    <div className="w-2 h-2 bg-muted rounded-full animate-bounce delay-75" />
+                    <div className="w-2 h-2 bg-muted rounded-full animate-bounce delay-150" />
+                    <span className="text-muted ml-2">Processing...</span>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -503,9 +489,9 @@ const LandingPage = ({ onStartUsing }) => {
                     setDemoCommand(example);
                     simulateResponse(example);
                   }}
-                  className="px-3 py-1 bg-slate-700/50 border border-cyan-500/30 rounded-full text-sm hover:bg-cyan-900/30 transition-colors hover:scale-105"
+                  className="px-3 py-1 bg-panel border border-line rounded-md text-sm hover:border-line-strong transition-colors hover:bg-bg-secondary text-ink"
                 >
-                  <Play className="inline w-3 h-3 mr-1" />
+                  <Play className="inline w-3 h-3 mr-1 text-muted" />
                   {example}
                 </button>
               ))}
